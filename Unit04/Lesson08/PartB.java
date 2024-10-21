@@ -12,7 +12,7 @@ public class PartB {
         Scanner in = new Scanner(System.in);
        
        //get input from user and set varibles as the input using scanner function
-        System.out.print("Enter APR (as a percentage for example 5.5): ");
+        System.out.print("Enter APR (as a percentage for example 5.5): %");
         double apr = in.nextDouble();
         System.out.print("Enter the balance: ");
         double initialbalance = in.nextDouble();
