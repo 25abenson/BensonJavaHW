@@ -4,7 +4,7 @@ package Unit04.Lesson08;
 // Lesson 08 HW Part A
 // 10/18/24
 
-public class HWPartA {
+public class PartA {
 
     public static void main(String[] args) {
 
