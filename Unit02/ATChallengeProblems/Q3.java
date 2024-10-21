@@ -15,7 +15,6 @@ public class Q3 {
         System.out.print("Enter a positive integer: ");
         int num = in.nextInt();
         
-        
 
         // verifies that it is a positive integer
         if (num <= 0) {
