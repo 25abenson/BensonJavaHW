@@ -7,21 +7,35 @@ package Unit04.Lesson08;
 import java.util.Scanner;
 public class PartB {
     public static void main(String[] args) {
+        
+        //scanner set up
         Scanner in = new Scanner(System.in);
+       
+       //get input from user and set varibles as the input using scanner function
         System.out.print("Enter APR (as a percentage for example 5.5): ");
         double apr = in.nextDouble();
         System.out.print("Enter the balance: ");
         double initialbalance = in.nextDouble();
-        int year = 0;
-        System.out.printf("-------------------------------------------------------------------------------------------------------%n");
-        System.out.printf(" Year                |                initial balance                |                balance ($)      %n");
-        System.out.printf("-------------------------------------------------------------------------------------------------------%n");
+        int year = 1;
+        
+        //begin the table formatting
+        System.out.println("-------------------------------------------------------------------------------------------------------");
+        System.out.println(" Year                |                interest earned                |                balance ($)      |");
+        System.out.println("-------------------------------------------------------------------------------------------------------");
 
-        for (year = 0; year < 6; year++){
-            initialbalance = (initialbalance * apr) + initialbalance;
-            System.out.printf(" %1f", year);
-            System.out.printf("                | %5.2f");
-            System.out.printf("           | %10.2f%n");
+       
+       //loop enabling the caculations of the interest from year one to five
+        for (year = 1; year < 6; year++){
+            double interest = (initialbalance * apr * .01);
+            double balance = interest + initialbalance;
+
+            //this prints the info in the correct format to the user
+            System.out.format("%21d", year);
+            System.out.printf("|%47.2f", interest);
+            initialbalance = balance;
+            System.out.format("|%,33.2f|%n", balance);
+           
+
         }
 
 
