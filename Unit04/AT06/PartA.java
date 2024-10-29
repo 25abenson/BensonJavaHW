@@ -25,9 +25,10 @@ public class PartA{
         //prints days of week
         System.out.println("Mon Tue Wed Thu Fri Sat Sun");
 
+        //gets if the day of the week of the first day
         DayOfWeek firstDayOfWeek = firstOfMonth.getDayOfWeek();
        
-
+        //calculates how many spaces needed till calendar gets to the day of the week of the first day
         switch (firstDayOfWeek){
             case MONDAY:
             spaces = 0;
@@ -52,27 +53,36 @@ public class PartA{
             break;
         }
 
+        //prints the number of spaces needed (calculated above)
         for (int i = 0; i < spaces; i++){
             System.out.print(" ");
         }
 
+        //gets length of month
         int numofDaysinMonth = month.length(false);
+        //assigns the current calendar day to the first day of month
         LocalDate currentCal = firstOfMonth;
     
+        //loop will continue till all integers of the days of month are printed
         for (int i = 0; i < numofDaysinMonth; i++){
+            //prints integer for current calendar day in correct format
             if (currentCal.getDayOfMonth() <= 9){
                 System.out.print("  " + currentCal.getDayOfMonth());
             } else {
                 System.out.print(" " + currentCal.getDayOfMonth());
             }
+            //if the einteger for today = the integer that is is currently printing, prints *
             if (today.getDayOfMonth() == currentCal.getDayOfMonth()){
                 System.out.print("*");}
             else {
+                //if not just prints space
                 System.out.print(" ");
             }
+            //if it is sunday, calendar goes to next line
             if (currentCal.getDayOfWeek().getValue() == 7){
                 System.out.println("");
             }
+            //day is increased by one and then loop is repeated
             currentCal = currentCal.plusDays(1);
     
         }
