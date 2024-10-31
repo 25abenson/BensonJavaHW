@@ -33,5 +33,24 @@ public class PartD {
             } System.out.println("55555");
            
         }
+
+        // here is also another way to do it cuz i dont think i nested the loops correctly above
+
+         int n = 5; // Number of rows, this way you can change the number of times the program runs
+
+        for (int i = 1; i <= n; i++) {
+            // Print leading dots corresponds to integer you are printing
+            for (int b = n; b > i; b--) {
+                System.out.print(".");
+            }
+
+            // Print the number the number of times u need it
+            for (int a = 1; a <= i; a++) {
+                System.out.print(i);
+            }
+
+            // Move to the next line after each row
+            System.out.println();
+        }
     }
 }
