@@ -5,7 +5,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-class Card{
+public class Card{
     Scanner in = new Scanner (System.in);
 
     //public enumeration
