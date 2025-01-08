@@ -3,7 +3,7 @@
 // 12/17/24
 
 //input geometry class
-import org.derryfield.math.Geometry;
+import math.Geometry;
 
 public class PartB {
     public static void main(String[] args) {

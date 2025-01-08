@@ -1,4 +1,4 @@
-package org.derryfield.math;
+package math;
 
 public class Geometry {
 
