@@ -199,8 +199,13 @@ public class Project {
 
                 // calculate total
                 dealerScore = numericdealer1 + numericdealer2;
-                if (dealerScore > 21 && (numericdealer1 == 11 || numericdealer2 == 11)) {
-                    dealerScore = dealerScore - 10;
+                if (dealerScore > 21) {
+                    for (int k = 0; i < dealerHand.size(); k++) {
+                        dealerHand.get(i);
+                        if (dealerHand.get(i).getNumCardVal() == 11) {
+                            dealerScore = dealerScore - 10;
+                        }
+                    }
                 }
 
                 // print dealer hand
@@ -236,8 +241,13 @@ public class Project {
 
                 // calculate total
                 playerScore = numericplayer1 + numericplayer2;
-                if (playerScore > 21 && (numericplayer1 == 11 || numericplayer2 == 11)) {
-                    playerScore = playerScore - 10;
+                if (playerScore > 21) {
+                    for (int i = 0; i < playerHand.size(); i++) {
+                        playerHand.get(i);
+                        if (playerHand.get(i).getNumCardVal() == 11) {
+                            playerScore = playerScore - 10;
+                        }
+                    }
                 }
 
                 // print player hand
@@ -269,9 +279,13 @@ public class Project {
 
                             // calculate new total and display it
                             playerScore = playerScore + numericplayernew;
-                            if (playerScore > 21
-                                    && (numericplayer1 == 11 || numericplayer2 == 11 || numericplayernew == 11)) {
-                                playerScore = playerScore - 10;
+                            if (playerScore > 21) {
+                                for (int k = 0; i < playerHand.size(); k++) {
+                                    playerHand.get(i);
+                                    if (playerHand.get(i).getNumCardVal() == 11) {
+                                        playerScore = playerScore - 10;
+                                    }
+                                }
                             }
 
                         } else {
@@ -306,9 +320,13 @@ public class Project {
 
                         // calculate new total and display it
                         dealerScore = dealerScore + numericdealernew;
-                        if (dealerScore > 21
-                                && (numericdealer1 == 11 || numericplayer2 == 11 || numericdealernew == 11)) {
-                            dealerScore = dealerScore - 10;
+                        if (dealerScore > 21) {
+                            for (int k = 0; i < dealerHand.size(); k++) {
+                                dealerHand.get(i);
+                                if (dealerHand.get(i).getNumCardVal() == 11) {
+                                    dealerScore = dealerScore - 10;
+                                }
+                            }
                         }
 
                     }
