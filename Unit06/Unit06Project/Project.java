@@ -418,6 +418,7 @@ public class Project {
                     System.out.println("Ooh you're total is over 21...Bust! The dealer wins!");
 
                 } else if (playerScore < 21) {
+
                     System.out.println("You total stands. Let's see what the dealer has!");
                     // now do the dealer hand
                     // print dealer hand
