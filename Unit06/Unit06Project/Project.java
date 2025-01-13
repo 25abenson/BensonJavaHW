@@ -22,6 +22,7 @@ class Card {
     // member variable declaration
     private SuitofCard suit;
     private ValofCard rank;
+    private boolean visible = true; // set card visible
 
     private char spade = '\u2660'; // ♠
     private char heart = '\u2661'; // ♡
@@ -40,18 +41,20 @@ class Card {
         setSuit(inputsuit);
     }
 
-    // clear screen method
-    public void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+    // override constructor
+    public Card(boolean visible) {
+        this();
+        setVisibilty(visible);
     }
 
-    // pause game method
-    public void delay(long msec) {
-        try {
-            Thread.sleep(msec);
-        } catch (Exception e) {
-        }
+    // set visibility
+    public boolean getVisibilty() {
+        return visible;
+    }
+
+    // set visibility
+    public void setVisibilty(boolean visible) {
+        this.visible = visible;
     }
 
     // get suit method
@@ -113,48 +116,81 @@ class Card {
 
     // get face of card
     public void getFace() {
-        if (suit == SuitofCard.CLUB) {
-            System.out.print(club);
-        } else if (suit == SuitofCard.HEART) {
-            System.out.print(heart);
-        } else if (suit == SuitofCard.SPADE) {
-            System.out.print(spade);
+        if (visible == false) {
+            System.out.print("##");
         } else {
-            System.out.print(diamond);
-        }
+            if (suit == SuitofCard.CLUB) {
+                System.out.print(club);
+            } else if (suit == SuitofCard.HEART) {
+                System.out.print(heart);
+            } else if (suit == SuitofCard.SPADE) {
+                System.out.print(spade);
+            } else {
+                System.out.print(diamond);
+            }
 
-        if (rank == ValofCard.TWO) {
-            System.out.print("2");
-        } else if (rank == ValofCard.THREE) {
-            System.out.print("3");
-        } else if (rank == ValofCard.FOUR) {
-            System.out.print("4");
-        } else if (rank == ValofCard.FIVE) {
-            System.out.print("5");
-        } else if (rank == ValofCard.SIX) {
-            System.out.print("6");
-        } else if (rank == ValofCard.SEVEN) {
-            System.out.print("7");
-        } else if (rank == ValofCard.EIGHT) {
-            System.out.print("8");
-        } else if (rank == ValofCard.NINE) {
-            System.out.print("9");
-        } else if (rank == ValofCard.TEN) {
-            System.out.print("T");
-        } else if (rank == ValofCard.JACK) {
-            System.out.print("J");
-        } else if (rank == ValofCard.QUEEN) {
-            System.out.print("Q");
-        } else if (rank == ValofCard.KING) {
-            System.out.print("K");
-        } else {
-            System.out.print("A");
+            if (rank == ValofCard.TWO) {
+                System.out.print("2");
+            } else if (rank == ValofCard.THREE) {
+                System.out.print("3");
+            } else if (rank == ValofCard.FOUR) {
+                System.out.print("4");
+            } else if (rank == ValofCard.FIVE) {
+                System.out.print("5");
+            } else if (rank == ValofCard.SIX) {
+                System.out.print("6");
+            } else if (rank == ValofCard.SEVEN) {
+                System.out.print("7");
+            } else if (rank == ValofCard.EIGHT) {
+                System.out.print("8");
+            } else if (rank == ValofCard.NINE) {
+                System.out.print("9");
+            } else if (rank == ValofCard.TEN) {
+                System.out.print("T");
+            } else if (rank == ValofCard.JACK) {
+                System.out.print("J");
+            } else if (rank == ValofCard.QUEEN) {
+                System.out.print("Q");
+            } else if (rank == ValofCard.KING) {
+                System.out.print("K");
+            } else {
+                System.out.print("A");
+            }
         }
 
     }
 }
 
 public class Project {
+
+    // clear screen method
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    // draw board function
+    public static void drawBoard(ArrayList<Card> cards) {
+        int i = 0;
+        while (i < cards.size()) {
+            cards.get(i).getFace();
+            i++;
+            if (i == cards.size() - 1) {
+                System.out.print(" ");
+            } else {
+                System.out.print(" ");
+            }
+        }
+    }
+
+    // pause game method
+    public static void delay(long msec) {
+        try {
+            Thread.sleep(msec);
+        } catch (Exception e) {
+        }
+    }
+
     public static void main(String[] args) {
 
         // create Scanner
@@ -166,6 +202,11 @@ public class Project {
                 System.out.println("Hope you play again soon! Till next time!");
                 break;
             } else {
+                clearScreen();
+                delay(500);
+                System.out.println("Dealing Hands...");
+                delay(1000);
+                clearScreen();
 
                 // create array list for player hand
                 ArrayList<Card> playerHand = new ArrayList<Card>();
@@ -180,7 +221,7 @@ public class Project {
                 int dealerScore = 0;
 
                 // creates random card instance
-                Card dealerfirstCard = new Card();
+                Card dealerfirstCard = new Card(true);
 
                 // add to dealer arraylist
                 dealerHand.add(dealerfirstCard);
@@ -189,7 +230,7 @@ public class Project {
                 int numericdealer1 = dealerfirstCard.getNumCardVal();
 
                 // creates random card instance
-                Card dealersecondCard = new Card();
+                Card dealersecondCard = new Card(false);
 
                 // add to dealer arraylist
                 dealerHand.add(dealersecondCard);
@@ -200,29 +241,22 @@ public class Project {
                 // calculate total
                 dealerScore = numericdealer1 + numericdealer2;
                 if (dealerScore > 21) {
-                    for (int k = 0; i < dealerHand.size(); k++) {
-                        dealerHand.get(i);
-                        if (dealerHand.get(i).getNumCardVal() == 11) {
+                    for (int k = 0; k < dealerHand.size(); k++) {
+                        dealerHand.get(k);
+                        if (dealerHand.get(k).getNumCardVal() == 11) {
                             dealerScore = dealerScore - 10;
                         }
                     }
                 }
 
                 // print dealer hand
+                dealersecondCard.setVisibilty(false);
                 System.out.print("Dealer: ");
-                for (int i = 0; i < dealerHand.size(); i++) {
-                    if (i == 1) {
-                        System.out.print("**");
-                        System.out.print(" ");
-                    } else {
-                        dealerHand.get(i).getFace();
-                        System.out.print(" ");
-                    }
-                }
+                drawBoard(dealerHand);
                 System.out.println("");
 
                 // creates random card instance
-                Card playerfirstCard = new Card();
+                Card playerfirstCard = new Card(true);
 
                 // add to player arraylist
                 playerHand.add(playerfirstCard);
@@ -231,7 +265,7 @@ public class Project {
                 int numericplayer1 = playerfirstCard.getNumCardVal();
 
                 // creates random card instance
-                Card playersecondCard = new Card();
+                Card playersecondCard = new Card(true);
 
                 // add to player arraylist
                 playerHand.add(playersecondCard);
@@ -241,109 +275,232 @@ public class Project {
 
                 // calculate total
                 playerScore = numericplayer1 + numericplayer2;
-                if (playerScore > 21) {
-                    for (int i = 0; i < playerHand.size(); i++) {
-                        playerHand.get(i);
-                        if (playerHand.get(i).getNumCardVal() == 11) {
-                            playerScore = playerScore - 10;
-                        }
-                    }
-                }
 
                 // print player hand
                 System.out.print("Player: ");
-                // iterate through list and print on seperate lines
-                for (int i = 0; i < playerHand.size(); i++) {
-                    playerHand.get(i).getFace();
-                    System.out.print(" ");
-                }
-                System.out.println(" ");
+                drawBoard(playerHand);
+                System.out.println();
 
                 if (playerScore < 21) {
 
-                    for (int j = playerScore; playerScore < 21;) {
-                        System.out.print("Would you like to hit (H) or stand(S)? ");
-                        int i = 2;
+                    for (int j = 0; playerScore < 21; j++) {
 
-                        if (in.nextLine().equals("H")) {
+                        System.out.print("Would you like to hit (H) or stand(S)? ");
+
+                        if (in.nextLine().toLowerCase().equals("h")) {
                             // creates random card instance
                             Card playernewCard = new Card();
-
                             // add to player arraylist
                             playerHand.add(playernewCard);
-                            playerHand.get(i).getFace();
-                            i++;
 
                             // get numeric value of card 1
                             int numericplayernew = playernewCard.getNumCardVal();
 
                             // calculate new total and display it
                             playerScore = playerScore + numericplayernew;
-                            if (playerScore > 21) {
-                                for (int k = 0; i < playerHand.size(); k++) {
-                                    playerHand.get(i);
-                                    if (playerHand.get(i).getNumCardVal() == 11) {
-                                        playerScore = playerScore - 10;
-                                    }
-                                }
-                            }
+
+                            clearScreen();
+                            // print dealer hand
+                            System.out.print("Dealer: ");
+                            drawBoard(dealerHand);
+                            System.out.println();
+                            // print player hand
+                            System.out.print("Player: ");
+                            drawBoard(playerHand);
+                            System.out.println();
+
+                            delay(1000);
 
                         } else {
                             break;
                         }
+
                     }
                 }
                 if (playerScore == 21) {
+
                     System.out.println("Your Score is 21! Let's see what the dealer has.");
-                } else if (playerScore > 21) {
-                    System.out.println("Ooh you're total is over 21...Bust!");
-                    break;
-                } else {
-                    System.out.println("You total stands. Let's see what the dealer has!");
-                }
+                    delay(3000);
+                    // now do the dealer hand
+                    // print dealer hand
+                    dealersecondCard.setVisibilty(true);
+                    clearScreen();
+                    // print dealer hand
+                    System.out.print("Dealer: ");
+                    drawBoard(dealerHand);
+                    System.out.println();
+                    // print player hand
+                    System.out.print("Player: ");
+                    drawBoard(playerHand);
+                    System.out.println();
 
-                // now do the dealer hand
-                // print dealer hand
+                    delay(1000);
 
-                // if dealer is under 17 they must hit
-                if (dealerScore < 17) {
-                    for (int j = dealerScore; dealerScore < 17;) {
-                        // creates random card instance
-                        Card dealernewCard = new Card();
+                    // if dealer is under 17 they must hit
+                    if (dealerScore < 17) {
+                        for (int j = dealerScore; dealerScore < 17;) {
+                            // creates random card instance
+                            Card dealernewCard = new Card();
 
-                        // add to player arraylist
-                        dealerHand.add(dealernewCard);
-                        dealernewCard.getFace();
+                            // add to player arraylist
+                            dealerHand.add(dealernewCard);
+                            dealernewCard.getFace();
 
-                        // get numeric value of card
-                        int numericdealernew = dealernewCard.getNumCardVal();
+                            // get numeric value of card
+                            int numericdealernew = dealernewCard.getNumCardVal();
 
-                        // calculate new total and display it
-                        dealerScore = dealerScore + numericdealernew;
-                        if (dealerScore > 21) {
-                            for (int k = 0; i < dealerHand.size(); k++) {
-                                dealerHand.get(i);
-                                if (dealerHand.get(i).getNumCardVal() == 11) {
-                                    dealerScore = dealerScore - 10;
+                            // calculate new total and display it
+                            dealerScore = dealerScore + numericdealernew;
+                            if (dealerScore > 21) {
+                                for (int i = 0; i < dealerHand.size(); i++) {
+                                    dealerHand.get(i);
+                                    if (dealerHand.get(i).getNumCardVal() == 11 && dealerScore > 21) {
+                                        dealerScore = dealerScore - 10;
+                                    }
+                                }
+                            }
+
+                            clearScreen();
+                            // print dealer hand
+                            System.out.print("Dealer: ");
+                            drawBoard(dealerHand);
+                            System.out.println();
+                            // print player hand
+                            System.out.print("Player: ");
+                            drawBoard(playerHand);
+                            System.out.println();
+
+                            delay(1000);
+
+                        }
+                    } else if (dealerScore > 21) {
+                        for (int k = 0; k <= 1; k++) {
+                            dealerHand.get(k);
+                            if (dealerScore > 21) {
+                                for (int i = 0; i < dealerHand.size(); i++) {
+                                    dealerHand.get(i);
+                                    if (dealerHand.get(i).getNumCardVal() == 11 && dealerScore > 21) {
+                                        dealerScore = dealerScore - 10;
+                                    }
                                 }
                             }
                         }
-
+                        // if dealer busts
+                        System.out.println("Dealer Busts! You win!");
                     }
-                } else if (dealerScore > 21) {
-                    // if dealer busts
-                    System.out.println("Dealer Busts! You win!");
-                } else {
                     // compare the totals
-                    if (dealerScore > playerScore) {
+                    if (dealerScore <= 21 && dealerScore > playerScore) {
                         System.out.println("Aw the dealer won. You lose. Try again.");
+
+                    } else if (dealerScore > 21) {
+                        System.out.println("Dealer Busts! You win!");
                     } else if (dealerScore == playerScore) {
                         System.out.println("Your scores are equal. Draw.");
                     } else {
                         System.out.println("Congrats! You are closer to 21! You win!");
                     }
+
+                }
+
+                if (playerScore > 21) {
+                    for (int k = 0; k <= 1; k++) {
+                        playerHand.get(k);
+                        if (playerScore > 21) {
+                            for (int i = 0; i < playerHand.size(); i++) {
+                                playerHand.get(i);
+                                if (playerHand.get(i).getNumCardVal() == 11 && playerScore > 21) {
+                                    playerScore = playerScore - 10;
+                                }
+                            }
+                        }
+                    }
+
+                    System.out.println("Ooh you're total is over 21...Bust! The dealer wins!");
+
+                } else if (playerScore < 21) {
+                    System.out.println("You total stands. Let's see what the dealer has!");
+                    // now do the dealer hand
+                    // print dealer hand
+                    dealersecondCard.setVisibilty(true);
+                    clearScreen();
+                    // print dealer hand
+                    System.out.print("Dealer: ");
+                    drawBoard(dealerHand);
+                    System.out.println();
+                    // print player hand
+                    System.out.print("Player: ");
+                    drawBoard(playerHand);
+                    System.out.println();
+
+                    delay(1000);
+
+                    // if dealer is under 17 they must hit
+                    if (dealerScore < 17) {
+                        for (int j = dealerScore; dealerScore < 17;) {
+                            // creates random card instance
+                            Card dealernewCard = new Card();
+
+                            // add to player arraylist
+                            dealerHand.add(dealernewCard);
+                            dealernewCard.getFace();
+
+                            // get numeric value of card
+                            int numericdealernew = dealernewCard.getNumCardVal();
+
+                            // calculate new total and display it
+                            dealerScore = dealerScore + numericdealernew;
+                            if (dealerScore > 21) {
+                                for (int i = 0; i < dealerHand.size(); i++) {
+                                    dealerHand.get(i);
+                                    if (dealerHand.get(i).getNumCardVal() == 11 && dealerScore > 21) {
+                                        dealerScore = dealerScore - 10;
+                                    }
+                                }
+                            }
+
+                            clearScreen();
+                            // print dealer hand
+                            System.out.print("Dealer: ");
+                            drawBoard(dealerHand);
+                            System.out.println();
+                            // print player hand
+                            System.out.print("Player: ");
+                            drawBoard(playerHand);
+                            System.out.println();
+
+                            delay(1000);
+
+                        }
+                    } else if (dealerScore > 21) {
+                        for (int k = 0; k <= 1; k++) {
+                            dealerHand.get(k);
+                            if (dealerScore > 21) {
+                                for (int i = 0; i < dealerHand.size(); i++) {
+                                    dealerHand.get(i);
+                                    if (dealerHand.get(i).getNumCardVal() == 11 || dealerScore > 21) {
+                                        dealerScore = dealerScore - 10;
+                                    }
+                                }
+                            }
+                        }
+                        // if dealer busts
+                        System.out.println("Dealer Busts! You win!");
+                    }
+                    // compare the totals
+                    if (dealerScore <= 21 && dealerScore > playerScore) {
+                        System.out.println("Aw the dealer won. You lose. Try again.");
+
+                    } else if (dealerScore > 21) {
+                        System.out.println("Dealer Busts! You win!");
+                    } else if (dealerScore == playerScore) {
+                        System.out.println("Your scores are equal. Draw.");
+                    } else {
+                        System.out.println("Congrats! You win!");
+                    }
+
                 }
             }
         }
+
     }
 }
