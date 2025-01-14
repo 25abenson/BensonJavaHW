@@ -217,7 +217,7 @@ public class Project {
         delay(3000);
 
         while (true) {
-            System.out.print("Would you like to play a round of Blackjack (Y) or type Q to quit:");
+            System.out.print("Would you like to play a round of Blackjack (type any key) or type Q to quit:");
             if (in.nextLine().toUpperCase().equals("Q")) {
                 clearScreen();
                 System.out.println("Hope you play again soon! Till next time!");
