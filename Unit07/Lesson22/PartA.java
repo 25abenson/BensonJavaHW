@@ -37,7 +37,7 @@ public class PartA {
                         System.out.println(word);
                     }
                     in.close();
-
+                    // if file is not found print exception message and start program again
                 } catch (FileNotFoundException e) {
                     System.err.println(e.getMessage());
                     System.err.println("Try another file name.");
