@@ -281,6 +281,14 @@ public class Project {
                 drawBoard(playerHand);
                 System.out.println();
 
+                int aceCount = 0;
+                if (numericplayer1 == 11) {
+                    aceCount++;
+                }
+                if (numericplayer2 == 11) {
+                    aceCount++;
+                }
+
                 if (playerScore < 21) {
 
                     for (int j = 0; playerScore < 21; j++) {
@@ -298,6 +306,13 @@ public class Project {
 
                             // calculate new total and display it
                             playerScore = playerScore + numericplayernew;
+                            if (numericplayernew == 11 && playerScore > 21) {
+                                playerScore = playerScore - 10;
+                            }
+                            if (aceCount > 0 && playerScore > 21) {
+                                playerScore = playerScore - 10 * aceCount;
+                                aceCount = 0;
+                            }
 
                             clearScreen();
                             // print dealer hand
