@@ -5,7 +5,6 @@
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Collections;
 
 class Card {
     Scanner in = new Scanner(System.in);
@@ -196,9 +195,31 @@ public class Project {
         // create Scanner
         Scanner in = new Scanner(System.in);
 
+        // char spade = '\u2660'; // ♠
+        // char heart = '\u2661'; // ♡
+
+        Card opening1 = new Card();
+        Card opening2 = new Card();
+
+        clearScreen();
+        System.out.println("------------------------------");
+        System.out.println("  +------+     ");
+        System.out.println("  |      |          +------+");
+        System.out.println("  |  **  |          |     *|");
+        System.out.println("  |      |          |   *  |");
+        System.out.println("  +------+          | *    |");
+        System.out.println("                    +------+");
+        System.out.println("");
+        System.out.println("        Welcome to....");
+        System.out.println("THE VISUAL STUDIO CODE CASINO");
+        System.out.println("------------------------------");
+
+        delay(3000);
+
         while (true) {
             System.out.print("Would you like to play a round of Blackjack (Y) or type Q to quit:");
-            if (in.nextLine().equals("Q")) {
+            if (in.nextLine().toUpperCase().equals("Q")) {
+                clearScreen();
                 System.out.println("Hope you play again soon! Till next time!");
                 break;
             } else {
