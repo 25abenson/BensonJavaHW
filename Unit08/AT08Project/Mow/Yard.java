@@ -2,7 +2,7 @@ package Mow;
 
 import java.util.Scanner;
 
-class Yard {
+public class Yard {
 
     private int length;
     private int width;
@@ -63,10 +63,20 @@ class Yard {
     }
 
     // method to print the lawn
-    public void printLawn() {
+    public void printLawn(Mower inputMower) {
         for (int row = 0; row < yard.length; row++) {
             for (int col = 0; col < yard[0].length; col++) {
-                System.out.print(yard[row][col]);
+                if (inputMower.getHorizontalPos() == col && inputMower.getVerticalPos() == row) {
+                    if (inputMower.getDirection() == 1) {
+                        System.out.print(">");
+                    } else if (inputMower.getDirection() == 3) {
+                        System.out.print("<");
+                    } else {
+                        System.out.print(">");
+                    }
+                } else {
+                    System.out.print(yard[row][col]);
+                }
             }
             System.out.println();
         }
@@ -76,29 +86,6 @@ class Yard {
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-    }
-
-    public static void main(String[] args) {
-
-        // initialize scanner
-        Scanner in = new Scanner(System.in);
-
-        // clear screen
-        clearScreen();
-
-        // prompt user for length and width of yard
-        System.out.print("Enter the height of the yard: ");
-        int height = in.nextInt();
-        System.out.print("Enter the width of the yard: ");
-        int width = in.nextInt();
-
-        // create lawn
-        Yard myLawn = new Yard(height, width);
-
-        System.out.println();
-
-        // print lawn
-        myLawn.printLawn();
     }
 
 }
