@@ -71,8 +71,10 @@ public class Yard {
                         System.out.print(">");
                     } else if (inputMower.getDirection() == 3) {
                         System.out.print("<");
+                    } else if (inputMower.getDirection() == 2) {
+                        System.out.print("v");
                     } else {
-                        System.out.print(">");
+                        System.out.print("^");
                     }
                 } else {
                     System.out.print(yard[row][col]);
