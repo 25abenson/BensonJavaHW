@@ -1,10 +1,10 @@
-//spiral method
+//line by line method 
 
 import java.util.Scanner;
 
 import Mow.*;
 
-public class Demo {
+public class Demo2 {
 
     // clear screen method
     public static void clearScreen() {
@@ -53,6 +53,10 @@ public class Demo {
             myYard.printLawn(myMower);
         }
 
+        int initialDirection = myMower.getDirection();
+
+        int rowNum = 0;
+
         // loop for cutting the grass
         for (int i = 0; i < myYard.getHeight() * myYard.getWidth(); i++) {
 
@@ -63,18 +67,29 @@ public class Demo {
             clearScreen();
             myYard.printLawn(myMower);
 
-            int numturns = 0;
-
             // check if needs to turn
-            while (myMower.checkSquare(myYard) == true) {
-                // turn and clear screen
-                myMower.turnRight();
-                clearScreen();
-                myYard.printLawn(myMower);
-                numturns++;
-                if (numturns > 4) {
+            if (myMower.checkSquare(myYard) == true) {
+                boolean left = myMower.updateLeftMower(myYard);
+                boolean right = myMower.updateRightMower(myYard);
+                // if everything is mowed, program stops
+                if (left == false && right == false) {
                     return;
                 }
+                // if there is a square unmowed to left it turns left twice
+                if (left == true) {
+                    myMower.turnLeft();
+                    myMower.mowSpace(myYard);
+                    myMower.moveMower();
+                    myMower.turnLeft();
+                    // if there is a square unmowed to the right it turns right twice
+                } else if (right == true) {
+                    myMower.turnRight();
+                    myMower.mowSpace(myYard);
+                    myMower.moveMower();
+                    myMower.turnRight();
+                }
+                clearScreen();
+                myYard.printLawn(myMower);
             }
         }
     }

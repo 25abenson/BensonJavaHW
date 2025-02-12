@@ -65,7 +65,7 @@ public class Mower {
     public void turnLeft() {
         direction--;
         if (direction < 0) {
-            direction = 4;
+            direction = 3;
         } else if (direction > 3) {
             direction = 0;
         }
@@ -115,16 +115,16 @@ public class Mower {
         int corner = rand.nextInt(4) + 1;
 
         // place the mower in one of the four corners
-        if (corner == 1) {
+        if (corner == 1) { // bottom left
             setHorizontalPos(1);
             setVerticalPos(yardheight);
-        } else if (corner == 2) {
+        } else if (corner == 2) { // top left
             setHorizontalPos(1);
             setVerticalPos(1);
-        } else if (corner == 3) {
+        } else if (corner == 3) { // bottom right
             setHorizontalPos(yardwidth);
             setVerticalPos(yardheight);
-        } else {
+        } else { // top right
             setHorizontalPos(yardwidth);
             setVerticalPos(1);
         }
@@ -133,13 +133,38 @@ public class Mower {
         direction = rand.nextInt(4);
     }
 
-    // update mower
-    public boolean updateMower(Yard inputYard) {
-        char squareLeft = inputYard.getLawnSquare(horizontalPosition, verticalPosition - 1);
+    // update mower left
+    public boolean updateLeftMower(Yard inputYard) {
+        char squareLeft;
+        if (direction == 0) {
+            squareLeft = inputYard.getLawnSquare(verticalPosition, horizontalPosition - 1);
+        } else if (direction == 1) {
+            squareLeft = inputYard.getLawnSquare(verticalPosition - 1, horizontalPosition);
+        } else if (direction == 2) {
+            squareLeft = inputYard.getLawnSquare(verticalPosition, horizontalPosition + 1);
+        } else {
+            squareLeft = inputYard.getLawnSquare(verticalPosition + 1, horizontalPosition);
+        }
         if (squareLeft == '+') {
-            turnLeft();
-            moveMower();
-            mowSpace(inputYard);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // update mower right
+    public boolean updateRightMower(Yard inputYard) {
+        char squareRight;
+        if (direction == 0) {
+            squareRight = inputYard.getLawnSquare(verticalPosition, horizontalPosition + 1);
+        } else if (direction == 1) {
+            squareRight = inputYard.getLawnSquare(verticalPosition + 1, horizontalPosition);
+        } else if (direction == 2) {
+            squareRight = inputYard.getLawnSquare(verticalPosition, horizontalPosition - 1);
+        } else {
+            squareRight = inputYard.getLawnSquare(verticalPosition - 1, horizontalPosition);
+        }
+        if (squareRight == '+') {
             return true;
         } else {
             return false;
