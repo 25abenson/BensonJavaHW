@@ -41,5 +41,4 @@ public class Demo {
             System.err.println("Unable to open the file for reading.");
         }
     }
-
 }
