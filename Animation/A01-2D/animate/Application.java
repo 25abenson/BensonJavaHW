@@ -18,12 +18,6 @@ public class Application extends JFrame {
         // add a Board to our JFrame.
         Board board = new Board();
         this.add(board);
-
-        // set the size based on the board size
-        // and also account for the border width and the bar height.
-        int application_height = (int) board.getPreferredSize().getHeight() + bar_height + border_width;
-        int application_width = (int) board.getPreferredSize().getWidth() + 2 * border_width;
-        this.setSize(application_width, application_height);
         OS os = checkOS();
         switch (os) {
             case WIN:
@@ -41,8 +35,8 @@ public class Application extends JFrame {
                 break;
         }
 
-        // int application_width = FRAME_WIDTH + 2 * border_width;
-        // int application_height = FRAME_HEIGHT + bar_height + border_width;
+        int application_height = (int) board.getPreferredSize().getHeight() + bar_height + border_width;
+        int application_width = (int) board.getPreferredSize().getWidth() + 2 * border_width;
         this.setTitle(title);
         this.setSize(application_width, application_height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
