@@ -26,6 +26,11 @@ public class Board extends JPanel implements KeyListener, MouseListener {
     private int clickX;
     private int clickY;
 
+    private String path = "media/blop.wav";
+    private SoundClip audioFile = new SoundClip(path);
+    private String path2 = "media/blip.wav";
+    private SoundClip audioFile2 = new SoundClip(path2);
+
     // constructor
     public Board() {
         setBackground(Color.CYAN);
@@ -40,6 +45,9 @@ public class Board extends JPanel implements KeyListener, MouseListener {
         // register mouse on key board
         this.addMouseListener(this);
 
+        audioFile.open();
+        audioFile2.open();
+
         x = B_WIDTH / 2;
         y = B_HEIGHT / 2;
     }
@@ -51,11 +59,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 
         if (keyChar == ' ') {
 
-            String path = "media/blop.wav";
-            SoundClip audioFile = new SoundClip(path);
-            audioFile.open();
             audioFile.play(true);
-            audioFile.close();
 
             x = B_WIDTH / 2;
             y = B_HEIGHT / 2;
@@ -85,11 +89,7 @@ public class Board extends JPanel implements KeyListener, MouseListener {
 
         repaint();
 
-        String path = "media/blip.wav";
-        SoundClip audioFile = new SoundClip(path);
-        audioFile.open();
-        audioFile.play(true);
-        audioFile.close();
+        audioFile2.play(true);
 
     }
 
