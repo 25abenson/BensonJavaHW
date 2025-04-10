@@ -12,9 +12,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.TimerTask;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 class Cannon {
 
@@ -22,10 +25,11 @@ class Cannon {
     private double xPos;
     private double yPos;
     private double angle;
-    private double muzzleV;
+    private double muzzleV = 30;
     private BufferedImage cannon;
     private int BASE_WIDTH = 60;
     private int BASE_HEIGHT = 80;
+    private static int HYPOT = 100;
 
     String path1 = "media/cannon.wav";
     SoundClip cannonSound = new SoundClip(path1);
@@ -126,6 +130,16 @@ class Cannon {
         cannonSound.play();
     }
 
+    public void cannonFire(CannonBall cannonball) {
+        double xo = HYPOT * Math.cos(2 * Math.PI - angle);
+        double yo = HYPOT * Math.sin(2 * Math.PI - angle);
+        double vx = muzzleV * Math.cos(2 * Math.PI - angle);
+        double vy = -muzzleV * Math.sin(2 * Math.PI - angle);
+
+        cannonball.launch(xPos + xo, yPos - yo, vx, vy);
+        this.cannonFire();
+    }
+
     // draw method
     public void drawCannon(Graphics2D cannong2d) {
         double xpoint = 15;
@@ -154,9 +168,13 @@ class Cannon {
 
 public class Board extends JPanel implements KeyListener {
 
-    private final int B_WIDTH = 800;
-    private final int B_HEIGHT = 450;
+    private final int B_WIDTH = 1600;
+    private final int B_HEIGHT = 900;
     private Cannon cannon;
+    private CannonBall cannonBall;
+    private Timer timer;
+    private final int INITIAL_DELAY = 0;
+    private final int TIMER_INTERVAL = 20;
 
     // constructor
     public Board() {
@@ -165,6 +183,17 @@ public class Board extends JPanel implements KeyListener {
         this.setFocusable(true);
         this.addKeyListener(this);
         cannon = new Cannon(60, B_HEIGHT - 60, 315);
+        int floor = B_HEIGHT - 25;
+        cannonBall = new CannonBall(0, 1, floor);
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new UpdateAnimation(), INITIAL_DELAY, TIMER_INTERVAL);
+    }
+
+    private class UpdateAnimation extends TimerTask {
+        public void run() {
+            cannonBall.updateBall();
+            repaint();
+        }
     }
 
     // override methods from keylistener
@@ -175,7 +204,7 @@ public class Board extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         // was the space key pressed?
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            cannon.cannonFire();
+            cannon.cannonFire(cannonBall);
         }
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -187,10 +216,30 @@ public class Board extends JPanel implements KeyListener {
             cannon.rotateCannonCounter();
             repaint();
         }
+
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            System.out.println("UP Key was pressed");
+            cannonBall.changeTimeScale(1);
+            repaint();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            System.out.println("DOWN Key was pressed");
+            cannonBall.changeTimeScale(-1);
+            repaint();
+        }
     }
 
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    private void displayInfo(Graphics2D g2d) {
+        g2d.setColor(Color.RED);
+        g2d.drawString("Press LEFT/RIGHT arrows to adjust the angle", 550, 20);
+        g2d.drawString("Press UP/DOWN arrows to adjust time scale", 550, 40);
+        g2d.drawString("Press SPACE to fire", 550, 60);
+        g2d.drawString("Angle = " + Math.round(360 - (Math.toDegrees(cannon.getAngleRotation()))) + " deg", 550, 80);
+        g2d.drawString("Timescale = " + cannonBall.getTimeScale(), 550, 100);
     }
 
     // override paintComponent() method
@@ -211,6 +260,12 @@ public class Board extends JPanel implements KeyListener {
 
         // draw cannon
         cannon.drawCannon(g2D);
+
+        // draw cannonBall
+        cannonBall.draw(g2D);
+
+        // display info
+        displayInfo(g2D);
 
     }
 
