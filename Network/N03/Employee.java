@@ -1,3 +1,10 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Employee {
     public static int lastIDUsed = 0;
 
@@ -58,4 +65,21 @@ public class Employee {
         System.out.printf("  ID #   = %06d%n", id);
         System.out.printf("  Salary = $%,.2f%n", salary);
     }
+
+    public void writeToStream(DataOutputStream outputStream) throws IOException {
+        // write the contents to output stream
+        outputStream.writeInt(id);
+        outputStream.writeDouble(salary);
+        outputStream.writeUTF(firstName);
+        outputStream.writeUTF(lastName);
+    }
+
+    public void readFromStream(DataInputStream inputStream) throws IOException {
+        // read in fields from the input stream
+        this.id = inputStream.readInt();
+        this.salary = inputStream.readDouble();
+        this.firstName = inputStream.readUTF();
+        this.lastName = inputStream.readUTF();
+    }
+
 }
