@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class SerializationWriting {
@@ -31,7 +32,15 @@ public class SerializationWriting {
                 String lastname = in.nextLine();
 
                 System.out.print("Enter salary: ");
-                double salary = in.nextDouble();
+
+                double salary = 0;
+                try {
+                    String token = in.nextLine();
+                    salary = Double.parseDouble(token);
+                } catch (InputMismatchException e) {
+                    System.err.println("  Error parsing salary.");
+                    System.err.println("  Using $0 as default salary.");
+                }
 
                 Employee.lastIDUsed++;
                 Employee newEmployee = new Employee(firstname, lastname, Employee.lastIDUsed, salary);
