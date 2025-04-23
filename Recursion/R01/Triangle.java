@@ -22,8 +22,23 @@ public class Triangle {
         triangleHelp(current + 1, max);
     }
 
+    // another way
+    public static void printTri(int n) {
+        if (n == 1) {
+            System.out.print("*");
+        } else {
+            printTri(n - 1);
+            for (int i = 0; i < n; i++) {
+                System.out.print("*");
+            }
+        }
+        System.out.println();
+
+    }
+
     public static void main(String[] args) {
         printTriangle(5);
+        printTri(5);
     }
 
 }
